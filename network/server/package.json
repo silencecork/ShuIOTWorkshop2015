@@ -1,0 +1,13 @@
+{
+  "name"         : "todo",
+  "version"      : "0.0.1",
+  "private"      : true,
+  "dependencies" : {
+    "express"    : "*",
+    "ejs"        : "*",
+    "ejs-locals" : "*",
+    "mongodb"   : "*",
+    "moment" 	: "*",
+    "lodash"  : "latest"
+  }
+}
