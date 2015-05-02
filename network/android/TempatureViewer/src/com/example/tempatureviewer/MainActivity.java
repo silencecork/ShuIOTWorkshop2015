@@ -31,9 +31,7 @@ import android.view.MenuItem;
 public class MainActivity extends Activity {
 	
 	private ProgressDialog mProgressDialog;
-
 	private static final String URL = "http://example-tempature-api-server.herokuapp.com/api/queryDataPoint?limit=30";
-	
 	private LineChart mChart;
 	
 	@Override
@@ -45,18 +43,6 @@ public class MainActivity extends Activity {
 		mProgressDialog.setMessage("Please wait");
 		
 		mChart = (LineChart) findViewById(R.id.chart);
-		XAxis xAxis = mChart.getXAxis();
-		xAxis.setPosition(XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(true);
-        
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setLabelCount(5);
-        
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setLabelCount(5);
-        rightAxis.setDrawGridLines(false);
-		
         fetchData();
 	}
 	
@@ -82,8 +68,6 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-
 
 	private Listener<JSONArray> mOnResponseListenr = new Listener<JSONArray>() {
 

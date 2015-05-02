@@ -1,8 +1,8 @@
 #include <SPI.h>
 #include <WiFi.h>
 
-char ssid[] = "HomeOfLiu";
-char pass[] = "01010101010101010101010101";
+char ssid[] = ""; // TODO fill it with your Wifi information
+char pass[] = ""; // TODO fill it with your Wifi information
 int status = WL_IDLE_STATUS;
 WiFiClient client;
 char server[] = "example-tempature-api-server.herokuapp.com";
@@ -43,8 +43,7 @@ void loop() {
     client.println("Connection: close");
     client.println();
     delay(1000);
-  } 
-  else {
+  } else {
     Serial.println("connection failed");
   }
   Serial.println("disconnecting.");
