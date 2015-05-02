@@ -6,10 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.networkcommunication.volleymgr.NetworkManager;
 import com.github.mikephil.charting.animation.AnimationEasing.EasingOption;
 import com.github.mikephil.charting.charts.LineChart;
@@ -49,7 +51,7 @@ public class MainActivity extends Activity {
 	private void fetchData() {
 		mChart.setData(null);
 		mProgressDialog.show();
-		JsonArrayRequest request = new JsonArrayRequest(URL, mOnResponseListenr, mOnErrorListener);
+		StringRequest request = new StringRequest(Request.Method.GET, URL, mOnResponseListenr, mOnErrorListener);
 		NetworkManager.getInstance(this).request(null, request);
 	}
 	
@@ -69,40 +71,46 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private Listener<JSONArray> mOnResponseListenr = new Listener<JSONArray>() {
+	private Listener<String> mOnResponseListenr = new Listener<String>() {
 
 		@Override
-		public void onResponse(JSONArray array) {
-			ArrayList<String> xVals = new ArrayList<String>();
-			ArrayList<Entry> yVals = new ArrayList<Entry>();
-			for (int i = 0; i < array.length(); i++) {
-				try {
-					JSONObject obj = array.getJSONObject(i);
-					String time = obj.getString("time");
-					float tempature = (float) obj.getDouble("value");
-					
-					xVals.add(time);
-					yVals.add(new Entry((float) tempature, i));
-					
-				} catch (JSONException e) {
-					e.printStackTrace();
+		public void onResponse(String response) {
+			JSONArray array;
+			try {
+				array = new JSONArray(response);
+				ArrayList<String> xVals = new ArrayList<String>();
+				ArrayList<Entry> yVals = new ArrayList<Entry>();
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject obj = array.getJSONObject(i);
+						String time = obj.getString("time");
+						float tempature = (float) obj.getDouble("value");
+						
+						xVals.add(time);
+						yVals.add(new Entry((float) tempature, i));
+						
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
+				
+				LineDataSet set1 = new LineDataSet(yVals, "Sensor 1");
+				set1.setDrawCircles(true);
+				
+				ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+		        dataSets.add(set1);
+		        
+		        LineData data = new LineData(xVals, dataSets);
+		        mChart.setData(data);
+		        mChart.animateX(1500, EasingOption.EaseInOutQuart);
+		        
+		        Legend l = mChart.getLegend();
+		        l.setForm(LegendForm.LINE);
+		        
+		        mProgressDialog.dismiss();
+			} catch (JSONException e1) {
+				e1.printStackTrace();
 			}
-			
-			LineDataSet set1 = new LineDataSet(yVals, "Sensor 1");
-			set1.setDrawCircles(true);
-			
-			ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-	        dataSets.add(set1);
-	        
-	        LineData data = new LineData(xVals, dataSets);
-	        mChart.setData(data);
-	        mChart.animateX(1500, EasingOption.EaseInOutQuart);
-	        
-	        Legend l = mChart.getLegend();
-	        l.setForm(LegendForm.LINE);
-	        
-	        mProgressDialog.dismiss();
 		}
 	};
 
