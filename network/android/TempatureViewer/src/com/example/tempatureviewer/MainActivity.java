@@ -75,41 +75,28 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onResponse(String response) {
-			JSONArray array;
 			try {
-				array = new JSONArray(response);
+				JSONArray array = new JSONArray(response);
 				ArrayList<String> xVals = new ArrayList<String>();
 				ArrayList<Entry> yVals = new ArrayList<Entry>();
 				for (int i = 0; i < array.length(); i++) {
-					try {
-						JSONObject obj = array.getJSONObject(i);
-						String time = obj.getString("time");
-						float tempature = (float) obj.getDouble("value");
-						
-						xVals.add(time);
-						yVals.add(new Entry((float) tempature, i));
-						
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+					JSONObject obj = array.getJSONObject(i);
+					String time = obj.getString("time");
+					float tempature = (float) obj.getDouble("value");
+					xVals.add(time);
+					yVals.add(new Entry((float) tempature, i));
 				}
-				
-				LineDataSet set1 = new LineDataSet(yVals, "Sensor 1");
+				LineDataSet set1 = new LineDataSet(yVals, "Tempature");
 				set1.setDrawCircles(true);
-				
 				ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
 		        dataSets.add(set1);
-		        
 		        LineData data = new LineData(xVals, dataSets);
 		        mChart.setData(data);
 		        mChart.animateX(1500, EasingOption.EaseInOutQuart);
-		        
-		        Legend l = mChart.getLegend();
-		        l.setForm(LegendForm.LINE);
-		        
-		        mProgressDialog.dismiss();
 			} catch (JSONException e1) {
 				e1.printStackTrace();
+			} finally {
+		        mProgressDialog.dismiss();
 			}
 		}
 	};
