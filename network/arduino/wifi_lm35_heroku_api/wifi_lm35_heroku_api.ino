@@ -5,7 +5,7 @@ char ssid[] = ""; // TODO fill it with your Wifi information
 char pass[] = ""; // TODO fill it with your Wifi information
 int status = WL_IDLE_STATUS;
 WiFiClient client;
-char server[] = "example-tempature-api-server.herokuapp.com";
+char server[] = ""; // TODO Fill it with your server
 int tempaturePin = 0;
 
 void setup() {
