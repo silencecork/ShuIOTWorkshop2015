@@ -3,14 +3,10 @@ package com.example.arduinosensorreceiver;
 
 import java.util.List;
 
-import com.android.utility.bluetooth.BluetoothListAdapter;
-import com.android.utility.bluetooth.LocalBluetoothManager;
-import com.android.utility.bluetooth.OnBluetoothDiscoverEventListener;
-
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +15,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class DiscoveryActivity extends ActionBarActivity {
+import com.android.utility.bluetooth.BluetoothListAdapter;
+import com.android.utility.bluetooth.LocalBluetoothManager;
+import com.android.utility.bluetooth.OnBluetoothDiscoverEventListener;
+
+public class DiscoveryActivity extends Activity {
     
     private ListView mListView;
     private BluetoothListAdapter mAdapter;
