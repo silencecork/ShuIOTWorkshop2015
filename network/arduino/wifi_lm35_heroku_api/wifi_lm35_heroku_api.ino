@@ -38,7 +38,8 @@ void loop() {
     request += tempature;
     request += " HTTP/1.1";
     client.println(request);
-    client.println("Host: example-tempature-api-server.herokuapp.com");
+    client.print("Host: ");
+    client.println(server);
     client.println("User-Agent: Arduino Sensor");
     client.println("Connection: close");
     client.println();
@@ -48,7 +49,7 @@ void loop() {
   }
   Serial.println("disconnecting.");
   client.stop();
-  delay(10000);
+  delay(5000);
 }
 
 void printWifiStatus() {
