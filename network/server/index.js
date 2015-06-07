@@ -1,10 +1,9 @@
 var express = require('express');
 var mongodb = require('mongodb');
 var moment = require('moment');
-var _ = require('lodash');
 var app = express();
 
-var uri = 'mongodb://<dbuse>:<dbpassword>@ds045011.mongolab.com:45011/sensor-statistic';
+var uri = 'mongodb://justin:justin12345@ds045011.mongolab.com:45011/sensor-statistic';
 var database;
 
 mongodb.MongoClient.connect(uri, function(err, db) {
